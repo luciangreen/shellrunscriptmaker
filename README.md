@@ -25,6 +25,7 @@ Start the platform (`npm start` in `lucianos`) and open http://localhost:4170/ap
 - **+ Terminal / + Prolog / + Pause** add steps by hand. ↑ ↓ reorder them and ✕ deletes one.
 - **Save** writes `<name>.shellrun.json` into the scripts folder (`LucianOS/shellrun` by default).
 - **Run** runs the steps in order. At a pause, press **Continue** or **Stop**. **Interrupt** stops the current step. If you reopen the page during a run, it picks the run up again.
+- On the LucianOS desktop, double-clicking a `.shellrun.json` icon opens it here and runs it. `/apps/shellrunscriptmaker/?open=path&run=1` does the same.
 - **Export .sh** writes a bash version next to the script, which you can run in Terminal with `bash name.sh`.
 
 Each Prolog step runs as one `swipl --stack-limit=… -g "…" -t halt` command, so nothing has to be typed at a `?-` prompt. Each query runs on its own, as at the prompt. If a query fails, you see a warning and the rest still run.

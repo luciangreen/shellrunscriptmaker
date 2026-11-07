@@ -300,6 +300,20 @@ async function run() {
   }
 }
 
+// Opened from a LucianOS icon: run straight away, unless a run is already going.
+async function runAfterAsking() {
+  if (job) return status('A script is already running', 'error');
+  await run();
+}
+
+// LucianOS desktop (same origin) asks shellrun to open a script: { type: 'shellrunscriptmaker.open', path, run }
+window.addEventListener('message', async (e) => {
+  if (e.origin !== location.origin || e.data?.type !== 'shellrunscriptmaker.open' || typeof e.data.path !== 'string') return;
+  if (job && e.data.run) return status('A script is already running; open it again when it finishes', 'error');
+  await openScript(e.data.path);
+  if (e.data.run && scriptPath === e.data.path) await runAfterAsking();
+});
+
 async function send(text) {
   if (!job) return;
   try {
@@ -375,6 +389,7 @@ async function init() {
   await showScripts();
   const toOpen = fromUrl ?? saved.openPath;
   if (toOpen) await openScript(toOpen);
+  if (fromUrl && new URLSearchParams(location.search).get('run') === '1' && scriptPath === fromUrl && !saved.lastJobId) await runAfterAsking();
   if (saved.lastJobId) {
     try {
       const j = await api.jobs.get(saved.lastJobId);
