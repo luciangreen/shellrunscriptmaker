@@ -1,0 +1,36 @@
+main.sr { display: grid; grid-template-columns: minmax(180px, 0.8fr) 1.6fr 1.2fr; gap: 12px; padding: 12px; height: calc(100% - 62px); }
+main.sr > .panel { min-height: 0; overflow: auto; }
+main.sr .run pre.output { max-height: none; }
+@media (max-width: 1100px) {
+  main.sr { grid-template-columns: minmax(180px, 1fr) 2fr; height: auto; }
+  main.sr .run { grid-column: 1 / -1; position: sticky; bottom: 0; max-height: 45vh; box-shadow: 0 -6px 18px rgb(0 0 0 / 12%); }
+}
+@media (max-width: 700px) { main.sr { grid-template-columns: 1fr; } }
+#runStatus { margin-left: 8px; font-weight: 400; }
+header.bar #name { min-width: 160px; flex: 0 1 260px; }
+ol.steplist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+ol.steplist li { border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 8px; padding: 8px 10px; display: grid; gap: 6px; background: var(--bg); }
+ol.steplist li[data-type='cmd'] { border-left-color: #8a8a8a; }
+ol.steplist li[data-type='prolog'] { border-left-color: var(--accent); }
+ol.steplist li[data-type='pause'] { border-left-color: #c58a00; }
+ol.steplist li[data-status='running'] { box-shadow: 0 0 0 2px var(--accent); }
+ol.steplist li[data-status='waiting'] { box-shadow: 0 0 0 2px #c58a00; }
+ol.steplist li[data-status='done'] .num::after { content: ' ✓'; color: var(--good); }
+ol.steplist li[data-status='failed'] .num::after { content: ' ✗'; color: var(--bad); }
+.stephead { display: flex; align-items: center; gap: 8px; }
+.stephead .num { font-weight: 600; min-width: 64px; }
+.stephead .kind { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--quiet); }
+.stephead button { min-height: 32px; padding: 0 10px; }
+.fields { display: grid; grid-template-columns: 110px 1fr; gap: 6px 8px; align-items: center; }
+.fields label { color: var(--quiet); font-size: 13px; }
+.fields input[type='text'] { min-height: 36px; width: 100%; }
+.fields textarea { width: 100%; min-height: 72px; font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--panel); resize: vertical; }
+@media (max-width: 560px) { .fields { grid-template-columns: 1fr; } }
+.pausebar { background: color-mix(in srgb, #c58a00 15%, transparent); border-radius: 8px; padding: 6px 10px; }
+dialog { border: 1px solid var(--line); border-radius: 12px; padding: 0; width: min(760px, 96vw); background: var(--panel); color: var(--ink); }
+dialog::backdrop { background: rgb(0 0 0 / 35%); }
+.dialogform { display: grid; gap: 10px; padding: 16px; }
+.dialogform h2 { margin: 0; font-size: 17px; }
+.dialogform label { display: grid; gap: 4px; }
+.dialogform textarea { min-height: 280px; }
+code { font-family: var(--mono); font-size: 0.92em; }

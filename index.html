@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>shellrun</title>
+  <link rel="stylesheet" href="/shared/style.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <h1>shellrun</h1>
+    <input id="name" type="text" aria-label="Script name" placeholder="Script name">
+    <span id="dirty" class="quiet"></span>
+    <span class="spacer"></span>
+    <button id="new">New</button>
+    <button id="save">Save</button>
+    <button id="saveAs">Save as</button>
+    <button id="export">Export .sh</button>
+    <button id="run" class="primary">Run</button>
+    <button id="interrupt" disabled>Interrupt</button>
+  </header>
+
+  <main class="sr">
+    <section class="panel scripts" aria-label="Scripts">
+      <h2>Scripts</h2>
+      <div class="row">
+        <input id="folder" type="text" class="mono" aria-label="Scripts folder">
+        <button id="folderGo">Show</button>
+      </div>
+      <ul id="scripts" class="files"></ul>
+    </section>
+
+    <section class="panel steps" aria-label="Steps">
+      <h2>Steps</h2>
+      <div class="row">
+        <button id="addCmd">+ Terminal</button>
+        <button id="addProlog">+ Prolog</button>
+        <button id="addPause">+ Pause</button>
+        <button id="paste">Paste commands…</button>
+        <span class="spacer"></span>
+        <label class="quiet"><input id="stopOnFail" type="checkbox" checked> Stop if a step fails</label>
+        <label class="quiet"><input id="tempDir" type="checkbox"> Temporary folder</label>
+      </div>
+      <ol id="steps" class="steplist"></ol>
+      <p id="problems" class="error"></p>
+    </section>
+
+    <section class="panel run" aria-label="Output">
+      <h2>Output <span id="runStatus" class="quiet"></span></h2>
+      <div id="pauseBar" class="row pausebar hidden">
+        <span id="pauseText"></span>
+        <span class="spacer"></span>
+        <button id="continue" class="primary">Continue</button>
+        <button id="stopAtPause">Stop</button>
+      </div>
+      <pre id="output" class="output" aria-live="polite"></pre>
+      <div id="inputRow" class="row hidden">
+        <input id="input" type="text" class="mono" placeholder="Type input for the running program, then Enter">
+        <button id="send">Send</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="pasteDialog">
+    <form method="dialog" class="dialogform">
+      <h2>Paste Terminal and Prolog commands</h2>
+      <p class="quiet">Lines like <code>cd folder</code>, <code>swipl --stack-limit=54G</code>, Prolog queries ending in a full stop, <code>halt.</code> and Terminal commands. A <code>% STOP HERE</code> line becomes a pause. <code>#</code> lines are comments.</p>
+      <label>Start in folder (inside the suite folder) <input id="pasteCwd" type="text" class="mono" placeholder="(suite folder)"></label>
+      <textarea id="pasteText" class="editor" spellcheck="false"></textarea>
+      <p id="pasteWarnings" class="error"></p>
+      <div class="row">
+        <span class="spacer"></span>
+        <button value="cancel">Cancel</button>
+        <button id="pasteAppend" value="append">Add to steps</button>
+        <button id="pasteReplace" class="primary" value="replace">Replace steps</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "shellrunscriptmaker",
+  "version": "0.1.0",
+  "description": "shellrun: make and run scripts of Terminal and Prolog commands in the LucianOS suite",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "license": "BSD-3-Clause"
+}
