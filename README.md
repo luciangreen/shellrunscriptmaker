@@ -36,9 +36,9 @@ Tick **Interactive** on a Prolog step to type answers to the program, for exampl
 
 The runner follows the platform's rules:
 
-- Only commands in `allowedCommands` can run, and never through a shell.
+- Only commands in `allowedCommands` can run, and never through a shell unless you add `bash` there yourself (see below).
 - Every folder must be inside the suite folder.
-- Pipes and redirects are not supported. Use **Save output to** on a Prolog step to write its output to a file.
+- A pasted line with pipes, redirects, `;` or `&&` becomes a `bash -c` step, with a note, so it runs only if `bash` is in `allowedCommands` (it is not by default). Otherwise use **Save output to** on a Prolog step to write its output to a file.
 
 ## Example
 

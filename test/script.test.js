@@ -117,3 +117,10 @@ test('exports a bash script', () => {
   assert.match(sh, /read -r -p/);
   assert.match(sh, /'mv' 'gl2a.txt' '..\/Text-to-Breasonings\/file.txt'/);
 });
+
+test('a pasted line with shell symbols becomes a bash -c step with a note', () => {
+  const { steps, warnings } = parseCommands('ls -la | grep pl\nls -la');
+  assert.deepEqual(steps.map((s) => [s.cmd, s.args]), [['bash', ['-c', 'ls -la | grep pl']], ['ls', ['-la']]]);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /bash -c/);
+});
